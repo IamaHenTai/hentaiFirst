@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="false" >
+
+
+
+            <TextView
+                android:id="@+id/province_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="省份：" >
+            </TextView>
+
+            <Spinner
+                android:id="@+id/province_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+            </Spinner>
+
+         <TextView
+                android:id="@+id/city_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="城市：" >
+            </TextView>
+
+            <Spinner
+                android:id="@+id/city_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+            </Spinner>
+
+
+            <TextView
+                android:id="@+id/county_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="县城镇：" >
+            </TextView>
+
+            <Spinner
+                android:id="@+id/county_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+            </Spinner>
+
+        <EditText
+            android:id="@+id/display_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:focusableInTouchMode="false"
+            android:hint="输出结果"
+            android:paddingTop="10dp" >
+        </EditText>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:text="下一个"
+        android:onClick="onClick"
+        android:id="@+id/btn_four"/>
+</LinearLayout>
