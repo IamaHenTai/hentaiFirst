@@ -3,7 +3,6 @@ package com.example.ser01.demos;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.ContentResolver;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -23,11 +22,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 
-import com.example.ser01.demos.fivedemo.FiveActivity;
 import com.example.ser01.demos.fivedemo.PermissionUtils;
 import com.example.ser01.demos.seconddemo.SecondActivity;
 import com.example.ser01.demos.view.MyDatePickerDialog;
-import com.example.ser01.demos.view.MyDialog;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,9 +44,7 @@ public class MainActivity extends AppCompatActivity
     private List<Map<String, String>> list_input = new ArrayList<>();
     private List<String> list = new ArrayList<>();
     private Button btn1,btn2;
-    private int n;
     private ArrayAdapter<String> arr_adapter;
-    private MyDialog dialog;
     int mYear, mMonth, mDay;
     final int DATE_DIALOG = 1;
 
@@ -74,7 +69,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onItemSelected(
                     AdapterView<?> parent, View view, int position, long id) {
-                n = position;
+
             }
 
             @Override
@@ -200,8 +195,7 @@ public class MainActivity extends AppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode){
             case 0:
-                if(data==null)
-                {
+                if(data==null) {
                     return;
                 }
                 //处理返回的data,获取选择的联系人信息
@@ -217,13 +211,12 @@ public class MainActivity extends AppCompatActivity
 
 
     private String[] getPhoneContacts(Uri uri){
-        String[] contact=new String[2];
+        String[] contact = new String[2];
         //得到ContentResolver对象
         ContentResolver cr = getContentResolver();
         //取得电话本中开始一项的光标
-        Cursor cursor=cr.query(uri,null,null,null,null);
-        if(cursor!=null)
-        {
+        Cursor cursor = cr.query(uri,null,null,null,null);
+        if(cursor != null) {
             cursor.moveToFirst();
             //取得联系人姓名
             int nameFieldColumnIndex=cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
@@ -235,12 +228,11 @@ public class MainActivity extends AppCompatActivity
             if(phone != null){
                 phone.moveToFirst();
                 contact[1] = phone.getString(phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                phone.close();
             }
-            phone.close();
             cursor.close();
         }
-        else
-        {
+        else {
             return null;
         }
         return contact;
