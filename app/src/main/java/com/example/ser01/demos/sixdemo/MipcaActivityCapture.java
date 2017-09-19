@@ -19,6 +19,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ser01.demos.R;
@@ -44,6 +45,7 @@ public class MipcaActivityCapture extends Activity implements Callback {
 	private boolean playBeep;
 	private static final float BEEP_VOLUME = 0.10f;
 	private boolean vibrate;
+	private TextView textView;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -53,7 +55,7 @@ public class MipcaActivityCapture extends Activity implements Callback {
 		//ViewUtil.addTopView(getApplicationContext(), this, R.string.scan_card);
 		CameraManager.init(getApplication());
 		viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
-		
+		textView = (TextView) findViewById(R.id.tv_scan_result);
 		Button mButtonBack = (Button) findViewById(R.id.button_back);
 		mButtonBack.setOnClickListener(new OnClickListener() {
 			
@@ -67,11 +69,12 @@ public class MipcaActivityCapture extends Activity implements Callback {
 		inactivityTimer = new InactivityTimer(this);
 	}
 
+	private SurfaceHolder surfaceHolder;
 	@Override
 	protected void onResume() {
 		super.onResume();
 		SurfaceView surfaceView = (SurfaceView) findViewById(R.id.preview_view);
-		SurfaceHolder surfaceHolder = surfaceView.getHolder();
+		surfaceHolder = surfaceView.getHolder();
 		if (hasSurface) {
 			initCamera(surfaceHolder);
 		} else {
@@ -120,14 +123,11 @@ public class MipcaActivityCapture extends Activity implements Callback {
 			Toast.makeText(
 					MipcaActivityCapture.this, "Scan failed!", Toast.LENGTH_SHORT).show();
 		}else {
-			Intent resultIntent = new Intent();
-			Bundle bundle = new Bundle();
-			bundle.putString("result", resultString);
-//			bundle.putParcelable("bitmap", barcode);
-			resultIntent.putExtras(bundle);
-			this.setResult(RESULT_OK, resultIntent);
+			textView.setText(resultString);
 		}
-		MipcaActivityCapture.this.finish();
+		initCamera(surfaceHolder);
+		if (handler != null)
+			handler.restartPreviewAndDecode();
 	}
 	
 	private void initCamera(SurfaceHolder surfaceHolder) {
